@@ -14,7 +14,7 @@
 >In order to use this library you need to define a table model.
 >Below is a model example of **Users** Table containing **Name,LastName,BirthDay,Credit** and a not mapped properties named **Status** :
 
-```<C#>
+```C#
     [Table("Users")]
     public class User :EzQueryTable<User>
     {
