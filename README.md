@@ -139,7 +139,7 @@
     List<Profile> profiles = queryBuilder.GetResult<Profile>();
 ```
 > We support `FULL JOIN, INNER JOIN, LEFT JOIN, RIGHT JOIN` and the default is **INNER JOIN**.
-> The 3rd parrameter is an ENUM and you can use it like below:
+> The 3rd parameter is an ENUM and you can use it like below:
 
 ```csharp
     .Join<User,Profile>(nameof(User.Id),nameof(Profile.UserId),JoinTypes.INNER)
@@ -154,7 +154,7 @@
 [^ Back To Top][TableOfContents]
 #### Map To
 
-> In above Join Example lets sopuse we need only **Id,FirstName,LastName** from **Users**
+> In above Join Example lets spouse we need only **Id,FirstName,LastName** from **Users**
 >  table and only **AvatarName** from **Profiles** table, and we want to get it as a single object.
 > In this case we need to define an object with these properties and use mapper function to get those
 > just like below example:
@@ -219,7 +219,7 @@
 [^ Back To Top][TableOfContents]
 #### Where
 
-> Using lamda expression, you can pass a predicate to `.Where(predicate)` function.
+> Using lambda expression, you can pass a predicate to `.Where(predicate)` function.
 > keep in mind that, we are supporting simple operations and for complex queries you need 
 > to use the [ORM functionality][UseAsOrm] of EzQuery.
 
@@ -229,7 +229,7 @@
 
 >However, you can declare conditions to up to 7 tables in your Where function if you 
 >want. if you use any not supported operation in the predicate, you will get an exception 
->indicating the problem. you wont get any silent treatment so feel free to exprement
+>indicating the problem. you wont get any silent treatment so feel free to experiment
 >and inform us what went wrong and how we can improve this library.
 >Below example shows the above join query with **Where** function:
 
@@ -253,9 +253,9 @@
 [^ Back To Top][TableOfContents]
 #### Fetch Skip
 
-> For fetching and skiping rows, you can use `.Limit(take:10,skip:5)` function.
-> If you dont want to skip or dont want to limit the number of returned recoreds,
-> you can set the coresponding parameter to `0`.
+> For fetching and skipping rows, you can use `.Limit(take:10,skip:5)` function.
+> If you don't want to skip or don't want to limit the number of returned records,
+> you can set the corresponding parameter to `0`.
 
 ```csharp
      //Take 10 , Skip 5
@@ -273,8 +273,8 @@
 
 > Using ezQuery makes paging the results so simple. If you use the `.Paginate(currentPage:1,itemsPerPage:20)`
 > function, the `.Limit(take:10,skip:5)` function will be ignored. You will get the limited number of results
-> using `.GetResult<T>()` function and overall number of recoreds can be obtained by `.GetPagedTotalRowsCount()` function.
-> Here is an excample:
+> using `.GetResult<T>()` function and overall number of records can be obtained by `.GetPagedTotalRowsCount()` function.
+> Here is an example:
 
 ```csharp
     var queryBuilder = new EzQueryBuilder();
@@ -307,7 +307,7 @@
 [^ Back To Top][TableOfContents]
 #### Update
 
-> Updating a table is as simle as useing the `Set<T>()` function,
+> Updating a table is as simple as using the `Set<T>()` function,
 > but you should consider using  `Where<T>()` function as well 
 > unless you are going to update the entire table.
 > 
@@ -316,7 +316,7 @@
 > 
 >The `Set<T>()` function has 4 overloads. Lets look at them one by one:
 
-> **Example 1 :** Set `Firstname = "Eric"` and set any other property to `NULL`.
+> **Example 1 :** Set `FirstName = "Eric"` and set any other property to `NULL`.
 > Leave `User.Id` or any property that is decorated with `[key]` attribute as it is.
 ```csharp
     var queryBuilder = new EzQueryBuilder();
@@ -330,7 +330,7 @@
     int affectedRows = await queryBuilder.ExecuteUpdateAsync(conn);
 ```
 
-> **Example 2 :** Set `Firstname = "Eric"` and set `Id = 21` as well
+> **Example 2 :** Set `FirstName = "Eric"` and set `Id = 21` as well
 > and set any other property to `NULL`.
 
 ```csharp
@@ -346,7 +346,7 @@
     int affectedRows = await queryBuilder.ExecuteUpdateAsync(conn);
 ```
 
-> **Example 3 :** Set `Firstname = "Eric"` and set `Id = 21` as well
+> **Example 3 :** Set `FirstName = "Eric"` and set `Id = 21` as well
 > and leave any other property as it is.
 
 ```csharp
@@ -462,9 +462,9 @@
 
 > All **Table Models** must inherit from `EzQueryTable<T>`. 
 
-> If column is a nullable type and you are going to set null value to it
-> , you should use a nullable type in your model.
-> In above example, **BirthDay** is a nullable type and you can pass NULL to it
+> If column is a null-able type and you are going to set null value to it
+> , you should use a null-able type in your model.
+> In above example, **BirthDay** is a null-able type and you can pass NULL to it
 > using insert or update command. For more informations you should take a look at 
 > [Supported Component Model Data Annotations][SupportedAnotations].
 
