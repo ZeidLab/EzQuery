@@ -1,10 +1,10 @@
 # EzQuery
 
 ## What is EzQuery?
+
  > __EzQuery__  is a  super easy to use  yet powerful .Net Core 5 library,
  to build SQL queries, to execute them , and to return populated sets of results of given
  table models. It does not contain a lot of features but it does the job.
-
 
 # Table of Contents
 
@@ -14,54 +14,73 @@
 [UseAsBuilder]:#use-as-a-query-builder
 [UseAsOrm]:#use-as-an-orm
 [UseAsRepository]:#use-repository-pattern-helper-methods
+[RepositoryMethods]:#ezQuery-repository-pattern-helper-methods
+- [EzQuery](#ezquery)
+  - [What is EzQuery?](#what-is-ezquery)
+- [Table of Contents](#table-of-contents)
+  - [How to install?](#how-to-install)
+  - [How to use?](#how-to-use)
+    - [Use as a query builder](#use-as-a-query-builder)
+      - [Select](#select)
+      - [Join](#join)
+      - [Map To](#map-to)
+      - [Order By](#order-by)
+      - [Where](#where)
+      - [Fetch Skip](#fetch-skip)
+      - [Paged Results](#paged-results)
+      - [Update](#update)
+      - [Insert](#insert)
+      - [Delete](#delete)
+    - [Use as an ORM](#use-as-an-orm)
+      - [Query Database](#query-database)
+      - [Execute commands on Database](#execute-commands-on-database)
+    - [Use repository pattern helper methods](#use-repository-pattern-helper-methods)
+      - [Recommended folder structure](#recommended-folder-structure)
+      - [Recommended DataContext class](#recommended-datacontext-class)
+      - [Recommended repository class and it's interface](#recommended-repository-class-and-its-interface)
+      - [EzQuery Repository Pattern Helper Methods](#ezquery-repository-pattern-helper-methods)
+  - [What is a table model?](#what-is-a-table-model)
+  - [Supported Component Model Data Annotations](#supported-component-model-data-annotations)
+    - [What are the namespaces?](#what-are-the-namespaces)
+    - [What are the supported annotations?](#what-are-the-supported-annotations)
+      - [Table](#table)
+      - [Key](#key)
+      - [Column](#column)
+      - [NotMapped](#notmapped)
+      - [Required](#required)
 
-- [How to install?](#how-to-install)
-- [How to use?](#how-to-use)
-  - [Use as a query builder][UseAsBuilder]
-    - [Select](#select)
-    - [Join](#join)
-    - [Map to](#map-to)
-    - [Order By](#order-by)
-    - [Where](#where)
-    - [Fetch Skip](#fetch-skip)
-    - [Paged Results](#paged-results)
-    - [Update](#update)
-    - [Insert](#insert)
-    - [Delete](#delete)
-  - [Use as an ORM][UseAsOrm]
-    - [Query Database](#query-database)
-    - [Execute commands on Database](#execute-commands-on-database)
-  - [Use repository pattern helper methods][UseAsRepository]
-    - [Recommended folder structure](#recommended-folder-structure)
-    - [Recommended DataContext class](#recommended-datacontext-class)
-    - [Recommended repository class and it's interface](#recommended-repository-class-and-its-interface)
-- [What is a table model?][TableModel]
-- [Supported Component Model Data Annotations](#supported-component-model-data-annotations)
-  - [What are the namespaces?](#what-are-the-namespaces)
-  - [What are the supported annotations?][SupportedAnotations]
-    - [Table](#table)
-    - [Key](#key)
-    - [Column](#column)
-    - [NotMapped](#notmapped)
-    - [Required](#required)
+  - [What is a table model?](#what-is-a-table-model)
+  - [Supported Component Model Data Annotations](#supported-component-model-data-annotations)
+    - [What are the namespaces?](#what-are-the-namespaces)
+    - [What are the supported annotations?](#what-are-the-supported-annotations)
+      - [Table](#table)
+      - [Key](#key)
+      - [Column](#column)
+      - [NotMapped](#notmapped)
+      - [Required](#required)
+
 ## How to install?
-> Using **Nuget PackageManager**, you need to look for **ZeidLab.EzQuery**
 
+> Using **Nuget PackageManager**, you need to look for **ZeidLab.EzQuery**
 > Using **Command line** : `Install-Package ZeidLab.EzQuery -ProjectName MyProject`
 
 [^ Back To Top][TableOfContents]
+
 ## How to use?
-> There is 3 ways to use this Nuget Package , [As a Query Builder and ORM][UseAsBuilder] 
+
+> There is 3 ways to use this Nuget Package , [As a Query Builder and ORM][UseAsBuilder]
 > , [Just as an ORM][UseAsOrm] or [As a repository pattern][UseAsRepository].
 > Of course you have the ability to choose any combination you need as well.
 
 
 [^ Back To Top][TableOfContents]
-### Use as a query builder
-> To use query building feature of EzQuery which is the most important and the main reason of building this package 
-> , you need to define a [Table Model][TableModel] first. Using ` Microsoft.Data.SqlClient`
-> , create an instance of `SqlConnection ` and using below examples create your own SQL query.
 
+### Use as a query builder
+
+> To use query building feature of EzQuery which is the most important and the main reason of building this package
+> , you need to define a [Table Model][TableModel] first. Using
+> `Microsoft.Data.SqlClient`
+> , create an instance of `SqlConnection` and using below examples create your own SQL query.
 > There are both Synchronous and Asynchronous methods to use.
 
 [^ Back To Top][TableOfContents]
@@ -70,6 +89,7 @@
 
 > You can select all columns or just one column to return.
 > Following code shows how to easily get all columns of Users table:
+
 ```csharp
     var queryBuilder = new EzQueryBuilder();
     await using (var conn = new SqlConnection(Settings.ConnectionString))
@@ -105,8 +125,8 @@
 ```
 
 > You can get value of specific properties by passing their name to `From<T>()`
->  function like below example.In this example only Id and FirstName will be populated
-> and every other properties value will be null. The whole User model will be returned 
+> function like below example.In this example only Id and FirstName will be populated
+> and every other properties value will be null. The whole User model will be returned
 > as a result set.
 
 ```csharp
@@ -118,12 +138,14 @@
     }
     List<User> users = queryBuilder.GetResult<User>();
 ```
+
 [^ Back To Top][TableOfContents]
+
 #### Join
 
 > You can join and select from as many tables as you need. There is no limitation.
-> But you need to 
-> Here is an example of Inner joining and selecting from Users and Profiles table 
+> But you need to
+> Here is an example of Inner joining and selecting from Users and Profiles table
 > `On [Users].[id] = [Profiles].[UserId]`
 
 ```csharp
@@ -138,6 +160,7 @@
     List<User> users = queryBuilder.GetResult<User>();
     List<Profile> profiles = queryBuilder.GetResult<Profile>();
 ```
+
 > We support `FULL JOIN, INNER JOIN, LEFT JOIN, RIGHT JOIN` and the default is **INNER JOIN**.
 > The 3rd parameter is an ENUM and you can use it like below:
 
@@ -152,10 +175,11 @@
 ```
 
 [^ Back To Top][TableOfContents]
+
 #### Map To
 
 > In above Join Example lets spouse we need only **Id,FirstName,LastName** from **Users**
->  table and only **AvatarName** from **Profiles** table, and we want to get it as a single object.
+> table and only **AvatarName** from **Profiles** table, and we want to get it as a single object.
 > In this case we need to define an object with these properties and use mapper function to get those
 > just like below example:
 
@@ -168,6 +192,7 @@
         public string AvName { get; set; }
     }
 ```
+
 > And this is how we use it:
 
 ```csharp
@@ -191,6 +216,7 @@
                 AvName = p.AvatarName
             }).ToList();
 ```
+
 > You can map up to 7 tables into a single object.
 
 [^ Back To Top][TableOfContents]
@@ -215,20 +241,20 @@
     }
 ```
 
-
 [^ Back To Top][TableOfContents]
+
 #### Where
 
 > Using lambda expression, you can pass a predicate to `.Where(predicate)` function.
-> keep in mind that, we are supporting simple operations and for complex queries you need 
+> keep in mind that, we are supporting simple operations and for complex queries you need
 > to use the [ORM functionality][UseAsOrm] of EzQuery.
 
 > **Warning:** You can not use the *Where* function multiple times in a single query.
->  If you do so,
+> If you do so,
 > the last *Where* function will be used in your query.
 
->However, you can declare conditions to up to 7 tables in your Where function if you 
->want. if you use any not supported operation in the predicate, you will get an exception 
+>However, you can declare conditions to up to 7 tables in your Where function if you
+>want. if you use any not supported operation in the predicate, you will get an exception
 >indicating the problem. you wont get any silent treatment so feel free to experiment
 >and inform us what went wrong and how we can improve this library.
 >Below example shows the above join query with **Where** function:
@@ -251,6 +277,7 @@
 ```
 
 [^ Back To Top][TableOfContents]
+
 #### Fetch Skip
 
 > For fetching and skipping rows, you can use `.Limit(take:10,skip:5)` function.
@@ -269,6 +296,7 @@
 ```
 
 [^ Back To Top][TableOfContents]
+
 #### Paged Results
 
 > Using ezQuery makes paging the results so simple. If you use the `.Paginate(currentPage:1,itemsPerPage:20)`
@@ -305,6 +333,7 @@
 ```
 
 [^ Back To Top][TableOfContents]
+
 #### Update
 
 > Updating a table is as simple as using the `Set<T>()` function,
@@ -318,6 +347,7 @@
 
 > **Example 1 :** Set `FirstName = "Eric"` and set any other property to `NULL`.
 > Leave `User.Id` or any property that is decorated with `[key]` attribute as it is.
+
 ```csharp
     var queryBuilder = new EzQueryBuilder();
     var user = new User()
@@ -365,6 +395,7 @@
 
 > **Example 4 :** Set properties one by one
 > and leave any other property as it is.
+
 ```csharp
     var queryBuilder = new EzQueryBuilder();
 
@@ -374,18 +405,55 @@
         .Where<User>(p => p.Id == 661533);
     int affectedRows = await queryBuilder.ExecuteUpdateAsync(conn);
 ```
+
 [^ Back To Top][TableOfContents]
+
 #### Insert
 
-> Lorem Ipsom
+> You can call most of EzQuery Methods multiple times for a single query.
+> `InsertValues<T>(IEnumerable<T> items, includeKey = false)`
+> and `InsertValue<T>(T item, includeKey = false)` are some of them.
+> `includeKey` is `false` by default but if you set it to `true`, it means you are going to insert the Ids as well as other properties.
+
+> **Example 1 :** insert list of values and get inserted Ids back.
+
+```csharp
+        var users = new List<User>(){
+            new User(){
+                FirstName = "Eric",
+                LastName = "Test"
+            }
+        };
+        await using var conn = new SqlConnection(Settings.ConnectionString);
+        var queryBuilder = new EzQueryBuilder()
+                                .InsertValues(users);           
+        var effectedRows = await queryBuilder.ExecuteInsertAsync(conn);
+        List<int> insertedIds = queryBuilder.GetInsertedIds();
+```
+
+> **Example 2 :** insert a single value and get inserted Id back.
+
+```csharp
+        var user =  new User(){
+                                FirstName = "Eric",
+                                LastName = "Test"
+                            };
+       
+        var queryBuilder = new EzQueryBuilder()
+                                .InsertValue(user);           
+        var effectedRows = await queryBuilder.ExecuteInsertAsync(conn);
+        List<int> insertedIds = queryBuilder.GetInsertedIds();
+```
 
 [^ Back To Top][TableOfContents]
+
 #### Delete
 
-> Delete is so simple with EzQuery but keep in mind that you should use `Where<T>()` 
-> unless you are going to delete every single recored in your table.
+> Delete is so simple with EzQuery but keep in mind that you should use `Where<T>()`
+> unless you are going to delete every single record in your table.
 
 > **Example 1 :** Delete a user with Id of 21.
+
 ```csharp
     var queryBuilder = new EzQueryBuilder();
 
@@ -395,6 +463,7 @@
 ```
 
 > **Example 2 :** Delete every single record in **Users** Table.
+
 ```csharp
     var queryBuilder = new EzQueryBuilder();
 
@@ -403,44 +472,220 @@
 ```
 
 [^ Back To Top][TableOfContents]
+
 ### Use as an ORM
 
-> Lorem Ipsom
+> For any reason if you can not use query building functionality of this package,
+> you can simply just write down your SQL Command and pass parameters as an anonymous object
+> to EzQuery and get your result back populated with given object.
+
 
 [^ Back To Top][TableOfContents]
+
 #### Query Database
 
-> Lorem Ipsom
+> below object is for the sake of this demonstration and as you see,
+> it is not even inherited form `:EzQueryTable<MyNewObject>`
+
+```csharp
+    public class MyNewObject
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string LastName { get; set; }
+        public string BirthDay { get; set; }
+        public decimal Credit { get; set; }
+    }
+```
+
+> **Example 1 :** Select from `Users` Table into `MyNewObject` object
+
+```csharp
+    await using var conn = new SqlConnection(Settings.ConnectionString);
+    var queryBuilder = new EzQueryBuilder();
+    List<MyNewObject> myUsers = await queryBuilder
+                                .QueryAsync<MyNewObject>(conn, "SELECT * FROM Users WHERE Id=@Id",new {Id = 21});
+```
 
 [^ Back To Top][TableOfContents]
+
 #### Execute commands on Database
 
-> Lorem Ipsom
+> **Example 2 :** Update `LastName` from `Users` Table where `Id=21`;
+
+```csharp
+    await using var conn = new SqlConnection(Settings.ConnectionString);
+    var queryBuilder = new EzQueryBuilder();
+    int affectedRows = await queryBuilder
+                                .ExecuteAsync(conn, "UPDATE Users Set LastName=@PreferredName WHERE Id=@Id",
+                                new {Id = ,PreferredName="TestLastName"});
+```
 
 [^ Back To Top][TableOfContents]
+
 ### Use repository pattern helper methods
 
-> Lorem Ipsom
+> Probably you asked yourself ,what is the repository pattern?
+> 
+> Well, as [Joydip Kanjilal](https://www.infoworld.com/author/Joydip-Kanjilal/) says,
+> "The Repository pattern implements separation of concerns by abstracting the data persistence logic in your applications". His full article is available [here](https://www.infoworld.com/article/3107186/how-to-implement-the-repository-design-pattern-in-c.html#:~:text=The%20Repository%20pattern%20implements%20separation,persistence%20logic%20in%20your%20applications&text=In%20using%20the%20Repository%20design,%2C%20an%20xml%20file%2C%20etc.).
+
+> In other words,by using repository pattern, you have a single source of truth
+> and by any reason you need to make critical change in your data persistance logic
+> you just need to do it in one place and not all over your code.
 
 [^ Back To Top][TableOfContents]
+
 #### Recommended folder structure
 
-> Lorem Ipsom
+> Now that we know what [repository pattern][UseAsRepository] is and how to create a [table model][TableModel]
+> , here is how we layout files and folders for `Users` and `Profiles` tables.
+> Don't worry, it is not as complex as it seems to be. In fact once you learn
+> the pattern you can create whole database model 10 times faster and more efficient.
+
+```text
+.
++-- Repo
+    +-- Models
+    |   +-- Profile.cs
+    |   +-- User.cs
+    +-- Interfaces
+    |   +-- IProfiles.cs
+    |   +-- IUsers.cs
+    +-- Repositories
+    |   +-- Profiles.cs
+    |   +-- Users.cs
+    +-- DataContext.cs
+```
 
 [^ Back To Top][TableOfContents]
+
 #### Recommended DataContext class
 
-> Lorem Ipsom
+> In some cases developers prefer to get connection string directly from config file.
+
+```csharp
+using System;
+using EzQueryTest.Repo.Repositories;
+using Microsoft.Data.SqlClient;
+
+namespace EzQueryTest.Repo
+{
+    public interface IDataContext
+    {
+        Users Users { get; }
+        Profiles Profiles { get; }
+    }
+
+    public class DataContext : IDisposable, IDataContext
+    {
+        private readonly string _connectionString;
+        private readonly SqlConnection _context;
+
+        public Users Users { get; }
+        public Profiles Profiles { get; }
+
+        public DataContext(string connectionString)
+        {
+            _connectionString = connectionString;
+            _context = new SqlConnection(_connectionString);
+            Users = new Users(_context);
+            Profiles = new Profiles(_context);
+        }
+
+
+        public void Dispose()
+        {
+            _context?.Dispose();
+        }
+    }
+}
+```
 
 [^ Back To Top][TableOfContents]
+
 #### Recommended repository class and it's interface
 
+> Just by inheriting from `EzQueryHelperClass<T>` in `ZeidLab.EzQuery.Helpers` namespace,
+> you inherit [30 commonly used functions and overloads][RepositoryMethods].
+> If you need any costume function, you can easily define it in your class
+> and use it side by side with already defined helper methods.
 
-> Lorem Ipsom
+> Lets look at **IUsers.cs** and **IProfiles.cs** file
+
+```csharp
+    using EzQueryTest.Repo.Models;
+    using ZeidLab.EzQuery.Helpers;
+
+    namespace EzQueryTest.Repo.Interfaces
+    {
+        public interface IUsers : IEzQueryHelperClass<User>
+        {
+            
+        }
+    }
+```
+
+```csharp
+    using EzQueryTest.Repo.Models;
+    using ZeidLab.EzQuery.Helpers;
+
+    namespace EzQueryTest.Repo.Interfaces
+    {
+
+        public interface IProfiles : IEzQueryHelperClass<Profile>
+
+        {
+
+        }
+    }
+```
+
+> Lets look at **Users.cs** and **Profiles.cs** file
+
+```csharp
+    using EzQueryTest.Repo.Interfaces;
+    using EzQueryTest.Repo.Models;
+    using Microsoft.Data.SqlClient;
+    using ZeidLab.EzQuery.Helpers;
+
+    namespace EzQueryTest.Repo.Repositories
+    {
+        public class Users : EzQueryHelperClass<User>, IUsers
+
+        {
+            public Users(SqlConnection context) : base(context)
+            {
+            }
+        }
+    }
+```
+
+```csharp
+    using EzQueryTest.Repo.Interfaces;
+    using EzQueryTest.Repo.Models;
+    using Microsoft.Data.SqlClient;
+    using ZeidLab.EzQuery.Helpers;
+
+    namespace EzQueryTest.Repo.Repositories
+    {
+        public class Profiles : EzQueryHelperClass<Profile>,IProfiles
+        {
+            public Profiles(SqlConnection context) : base(context)
+            {
+            }
+        }
+    }
+```
 
 [^ Back To Top][TableOfContents]
- 
+
+#### EzQuery Repository Pattern Helper Methods
+
+[^ Back To Top][TableOfContents]
+
 ## What is a table model?
+
 >In order to use this library you need to define a table model.
 >Below is a model example of **Users** Table containing **Name,LastName,BirthDay,Credit** and a not mapped properties named **Status** :
 
@@ -460,12 +705,12 @@
     }
 ```
 
-> All **Table Models** must inherit from `EzQueryTable<T>`. 
+> All **Table Models** must inherit from `EzQueryTable<T>`.
 
 > If column is a null-able type and you are going to set null value to it
 > , you should use a null-able type in your model.
 > In above example, **BirthDay** is a null-able type and you can pass NULL to it
-> using insert or update command. For more informations you should take a look at 
+> using insert or update command. For more information's you should take a look at
 > [Supported Component Model Data Annotations][SupportedAnotations].
 
 > For the sake of this tutorial, we are going to define another table model.
@@ -483,18 +728,21 @@
     }
 ```
 
-
 [^ Back To Top][TableOfContents]
 
 ## Supported Component Model Data Annotations
+
 ### What are the namespaces?
+
 ```csharp
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 ```
 
 [^ Back To Top][TableOfContents]
+
 ### What are the supported annotations?
+
 >- [Table("TableName")](#table)
 >- [Key](#key)
 >- [Column("ColumnName")](#column)
@@ -514,14 +762,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 #### Column
 
-> `[Column("CoulmnName")]` attribute allows you to pick a name other than the column name of
->  your database table for your property of your **Table Model**.
+> `[Column("ColumnName")]` attribute allows you to pick a name other than the column name of
+> your database table for your property of your **Table Model**.
 > EzQuery only uses the **Name** property of `[Column]` attribute and
 > the **Order** and the **TypeName** is ignored.
 
 #### NotMapped
 
-> If you are using a property in your **Table Model** that does not have a 
+> If you are using a property in your **Table Model** that does not have a
 > corresponding column in your database , you should consider using the `[NotMapped]` attribute.
 
 #### Required
@@ -529,4 +777,3 @@ using System.ComponentModel.DataAnnotations.Schema;
 > If you have a column in your database that is **NotNull** you should consider using the `[Required]` attribute.
 
 [^ Back To Top][TableOfContents]
-
