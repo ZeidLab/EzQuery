@@ -682,6 +682,154 @@ namespace EzQueryTest.Repo
 
 #### EzQuery Repository Pattern Helper Methods
 
+> First of all, EzQuery Helper methods, a little bit violate the repository pattern
+> principles allowing developers to pass lambda expressions as parameter and using
+> them as part of the main query. The problem is, if in any case you want to use
+> another library other than EzQuery after finishing your application, probably
+> you will need to go back and refactor many places in your app. I strongly
+> recommend you to define your own helper methods based on your own need and use
+> EzQuery helper methods as examples.
+
+> **SELECT Examples :**
+
+```csharp
+    using (var Db = new DataContext(Settings.ConnectionString))
+    {
+        var users = await Db.Users.SelectAsync());
+    }
+```
+
+```csharp
+    using (var Db = new DataContext(Settings.ConnectionString))
+    {
+        int id = 20;
+        var user = (await Db.Users.SelectAsync(p => p.Id == id)).FirstOrDefault();
+    }
+```
+
+```csharp
+    using (var Db = new DataContext(Settings.ConnectionString))
+    {
+        PagedQueryResult<User> result = await Db.Users.SelectPagedAsync();
+    }
+```
+
+```csharp
+    using (var Db = new DataContext(Settings.ConnectionString))
+    {
+        PagedQueryResult<User> result = 
+            await Db.Users.SelectPagedAsync(
+                            predicate: p => p.LastName.Contains("ed"),
+                            currentPage:3,
+                            itemsPerPage:20);
+
+        List<User> users = result.Records;
+        int totalNumberOfRecordsInDb = result.TotalCount;
+    }
+```
+
+[^ Back To Top][TableOfContents]
+
+> **COUNT Examples :**
+
+```csharp
+    using (var Db = new DataContext(Settings.ConnectionString))
+    {
+        int count = await Db.Users.CountAsync();
+    }
+```
+
+```csharp
+    using (var Db = new DataContext(Settings.ConnectionString))
+    {
+        int count = await Db.Users
+            .CountAsync(p => p.BirthDay >= DateTime.UtcNow.AddYears(-18)
+            || p.BirthDay == null);
+    }
+```
+
+[^ Back To Top][TableOfContents]
+
+> **UPDATE Examples :**
+
+```csharp
+    using (var Db = new DataContext(Settings.ConnectionString))
+    {
+        int affectedRows = await Db.Users.UpdateAsync(u => u.Id == 19,
+        new { LastName = "Test Update" });
+    }
+```
+
+```csharp
+    using (var Db = new DataContext(Settings.ConnectionString))
+    {
+        User user = (await Db.Users.SelectAsync(p => p.Id == 20))
+            .FirstOrDefault();
+        user.LastName = "Update Test";
+        user.Id = 358;
+
+        int affectedRows = await Db.Users
+            .UpdateAsync(u => u.Id == 20, user, includeKey:true);
+    }
+```
+
+```csharp
+    using (var Db = new DataContext(Settings.ConnectionString))
+    {
+        int affectedRows = await Db.Users
+            .UpdateAsync(u => u.Id == 19, nameof(User.LastName), "Update Test");
+    }
+```
+
+[^ Back To Top][TableOfContents]
+
+> **INSERT Examples :**
+
+```csharp
+    var users = new List<User>();
+    users.Add(new User());
+    users.Add(new User());
+    users.Add(new User());
+
+    using (var Db = new DataContext(Settings.ConnectionString))
+    {
+        int affectedRows = await Db.Users.InsertAsync(users);
+    }
+
+    using (var Db = new DataContext(Settings.ConnectionString))
+    {
+        var LastInsertedIds = (List<int>)await Db.Users.InsertGetIdsAsync(users);
+    }
+
+    using (var Db = new DataContext(Settings.ConnectionString))
+    {
+        int affectedRows = await Db.Users
+            .InsertAsync(new User(),includeKeys:true);
+    }
+
+    using (var Db = new DataContext(Settings.ConnectionString))
+    {
+        int LastInsertedId = await Db.Users.InsertGetIdAsync(new User());
+    }
+```
+
+[^ Back To Top][TableOfContents]
+
+> **DELETE Examples :**
+
+```csharp
+    using (var Db = new DataContext(Settings.ConnectionString))
+    {
+        // DELETE All RECORDS
+        int affectedRows = await Db.Users.DeleteAsync();
+    }
+
+    using (var Db = new DataContext(Settings.ConnectionString))
+    {
+        int affectedRows = await Db.Users.DeleteAsync(u => u.Id == 20);
+    }
+```
+
 [^ Back To Top][TableOfContents]
 
 ## What is a table model?
