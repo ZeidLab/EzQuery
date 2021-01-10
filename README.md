@@ -15,9 +15,8 @@
 [UseAsOrm]:#use-as-an-orm
 [UseAsRepository]:#use-repository-pattern-helper-methods
 [RepositoryMethods]:#ezQuery-repository-pattern-helper-methods
-- [EzQuery](#ezquery)
+
   - [What is EzQuery?](#what-is-ezquery)
-- [Table of Contents](#table-of-contents)
   - [How to install?](#how-to-install)
   - [How to use EzQuery?](#how-to-use-ezquery)
     - [Use as a query builder](#use-as-a-query-builder)
