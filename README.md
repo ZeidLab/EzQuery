@@ -2,11 +2,11 @@
 
 ## What is EzQuery?
 
- > __EzQuery__  is a  super easy to use, yet powerful .Net Core 5 library,
+ > __EzQuery__  is a  super easy to use, yet powerful .Net 5 library,
  to build SQL queries, to execute them , and to return populated sets of results of given
  table models. It does not contain a lot of features but it does the job.
 
-# Table of Contents
+## Table of Contents
 
 [TableOfContents]:#table-of-Contents
 [TableModel]:#what-is-a-table-model
