@@ -2,7 +2,7 @@
 
 ## What is EzQuery?
 
- > __EzQuery__  is a  super easy to use  yet powerful .Net Core 5 library,
+ > __EzQuery__  is a  super easy to use, yet powerful .Net Core 5 library,
  to build SQL queries, to execute them , and to return populated sets of results of given
  table models. It does not contain a lot of features but it does the job.
 
@@ -19,7 +19,7 @@
   - [What is EzQuery?](#what-is-ezquery)
 - [Table of Contents](#table-of-contents)
   - [How to install?](#how-to-install)
-  - [How to use?](#how-to-use)
+  - [How to use EzQuery?](#how-to-use-ezquery)
     - [Use as a query builder](#use-as-a-query-builder)
       - [Select](#select)
       - [Join](#join)
@@ -62,13 +62,14 @@
 ## How to install?
 
 > Using **Nuget PackageManager**, you need to look for **ZeidLab.EzQuery**
+
 > Using **Command line** : `Install-Package ZeidLab.EzQuery -ProjectName MyProject`
 
 [^ Back To Top][TableOfContents]
 
-## How to use?
+## How to use EzQuery?
 
-> There is 3 ways to use this Nuget Package , [As a Query Builder and ORM][UseAsBuilder]
+> There are 3 ways to use this Nuget Package , [As a Query Builder and ORM][UseAsBuilder]
 > , [Just as an ORM][UseAsOrm] or [As a repository pattern][UseAsRepository].
 > Of course you have the ability to choose any combination you need as well.
 
@@ -77,7 +78,7 @@
 
 ### Use as a query builder
 
-> To use query building feature of EzQuery which is the most important and the main reason of building this package
+> To use the query building feature of EzQuery which is the most important and the main reason for building this package
 > , you need to define a [Table Model][TableModel] first. Using
 > `Microsoft.Data.SqlClient`
 > , create an instance of `SqlConnection` and using below examples create your own SQL query.
@@ -124,7 +125,7 @@
     }
 ```
 
-> You can get value of specific properties by passing their name to `From<T>()`
+> You can get the value of specific properties by passing their name to `From<T>()`
 > function like below example.In this example only Id and FirstName will be populated
 > and every other properties value will be null. The whole User model will be returned
 > as a result set.
@@ -178,7 +179,7 @@
 
 #### Map To
 
-> In above Join Example lets spouse we need only **Id,FirstName,LastName** from **Users**
+> In the above Join Example, let's say we need only **Id,FirstName,LastName** from **Users**
 > table and only **AvatarName** from **Profiles** table, and we want to get it as a single object.
 > In this case we need to define an object with these properties and use mapper function to get those
 > just like below example:
@@ -343,7 +344,7 @@
 >If you want to
 > set some columns to *NULL*, you can.
 > 
->The `Set<T>()` function has 4 overloads. Lets look at them one by one:
+>The `Set<T>()` function has 4 overloads. Let's look at them one by one:
 
 > **Example 1 :** Set `FirstName = "Eric"` and set any other property to `NULL`.
 > Leave `User.Id` or any property that is decorated with `[key]` attribute as it is.
@@ -410,7 +411,7 @@
 
 #### Insert
 
-> You can call most of EzQuery Methods multiple times for a single query.
+> You can call most of the EzQuery Methods multiple times for a single query.
 > `InsertValues<T>(IEnumerable<T> items, includeKey = false)`
 > and `InsertValue<T>(T item, includeKey = false)` are some of them.
 > `includeKey` is `false` by default but if you set it to `true`, it means you are going to insert the Ids as well as other properties.
@@ -477,7 +478,7 @@
 
 > For any reason if you can not use query building functionality of this package,
 > you can simply just write down your SQL Command and pass parameters as an anonymous object
-> to EzQuery and get your result back populated with given object.
+> to EzQuery and get your result back populated with the given object.
 
 
 [^ Back To Top][TableOfContents]
@@ -530,18 +531,18 @@
 > Well, as [Joydip Kanjilal](https://www.infoworld.com/author/Joydip-Kanjilal/) says,
 > "The Repository pattern implements separation of concerns by abstracting the data persistence logic in your applications". His full article is available [here](https://www.infoworld.com/article/3107186/how-to-implement-the-repository-design-pattern-in-c.html#:~:text=The%20Repository%20pattern%20implements%20separation,persistence%20logic%20in%20your%20applications&text=In%20using%20the%20Repository%20design,%2C%20an%20xml%20file%2C%20etc.).
 
-> In other words,by using repository pattern, you have a single source of truth
-> and by any reason you need to make critical change in your data persistance logic
+> In other words,by using the repository pattern, you have a single source of truth
+> and by any reason you need to make critical changes in your data persistence logic
 > you just need to do it in one place and not all over your code.
 
 [^ Back To Top][TableOfContents]
 
 #### Recommended folder structure
 
-> Now that we know what [repository pattern][UseAsRepository] is and how to create a [table model][TableModel]
+> Now that we know what [the repository pattern][UseAsRepository] is and how to create a [table model][TableModel]
 > , here is how we layout files and folders for `Users` and `Profiles` tables.
 > Don't worry, it is not as complex as it seems to be. In fact once you learn
-> the pattern you can create whole database model 10 times faster and more efficient.
+> the pattern you can create the whole database model 10 times faster and more efficiently.
 
 ```text
 .
@@ -562,7 +563,7 @@
 
 #### Recommended DataContext class
 
-> In some cases developers prefer to get connection string directly from config file.
+> In some cases developers prefer to get the connection string directly from the config file.
 
 ```csharp
 using System;
@@ -611,7 +612,7 @@ namespace EzQueryTest.Repo
 > If you need any costume function, you can easily define it in your class
 > and use it side by side with already defined helper methods.
 
-> Lets look at **IUsers.cs** and **IProfiles.cs** file
+> Let's look at **IUsers.cs** and **IProfiles.cs** file
 
 ```csharp
     using EzQueryTest.Repo.Models;
@@ -641,7 +642,7 @@ namespace EzQueryTest.Repo
     }
 ```
 
-> Lets look at **Users.cs** and **Profiles.cs** file
+> Let's look at **Users.cs** and **Profiles.cs** file
 
 ```csharp
     using EzQueryTest.Repo.Interfaces;
@@ -683,11 +684,11 @@ namespace EzQueryTest.Repo
 #### EzQuery Repository Pattern Helper Methods
 
 > First of all, EzQuery Helper methods, a little bit violate the repository pattern
-> principles allowing developers to pass lambda expressions as parameter and using
+> principles allowing developers to pass lambda expressions as a parameter and using
 > them as part of the main query. The problem is, if in any case you want to use
 > another library other than EzQuery after finishing your application, probably
 > you will need to go back and refactor many places in your app. I strongly
-> recommend you to define your own helper methods based on your own need and use
+> recommend you to define your own helper methods based on your own needs and use
 > EzQuery helper methods as examples.
 
 > **SELECT Examples :**
@@ -855,9 +856,9 @@ namespace EzQueryTest.Repo
 
 > All **Table Models** must inherit from `EzQueryTable<T>`.
 
-> If column is a null-able type and you are going to set null value to it
+> If column is a null-able type and you are going to set a null value to it
 > , you should use a null-able type in your model.
-> In above example, **BirthDay** is a null-able type and you can pass NULL to it
+> In the above example, **BirthDay** is a null-able type and you can pass NULL to it
 > using insert or update command. For more information's you should take a look at
 > [Supported Component Model Data Annotations][SupportedAnotations].
 
