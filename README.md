@@ -316,7 +316,7 @@
         await queryBuilder.From<User>()
                 .From<Profile>()
                 .Join<User,Profile>(nameof(User.Id),nameof(Profile.UserId))
-                .Where<User,Profile>( (u,p)=> u.Name.StartsWith("Test") && p.AvatarName.Contains("ed") && u.Id > 254)
+                .Where<User,Profile>( (u,p)=> u.FirstName.StartsWith("Test") && p.AvatarName.Contains("ed") && u.Id > 254)
                 .OrderBy<User>(nameof(User.LastName))
                 .OrderBy<Profile>(nameof(Profile.AvatarName),OrderByTypes.Asc)
                 .Paginate(currentPage:1,itemsPerPage:20)
