@@ -509,7 +509,9 @@
     await using var conn = new SqlConnection(Settings.ConnectionString);
     var queryBuilder = new EzQueryBuilder();
     List<MyNewObject> myUsers = await queryBuilder
-                                .QueryAsync<MyNewObject>(conn, "SELECT * FROM Users WHERE Id=@Id",new {Id = 21});
+                            .QueryAsync<MyNewObject>(conn,
+                            "SELECT * FROM Users WHERE Id=@Id",
+                            new {Id = 21});
 ```
 
 [^ Back To Top][TableOfContents]
@@ -522,8 +524,9 @@
     await using var conn = new SqlConnection(Settings.ConnectionString);
     var queryBuilder = new EzQueryBuilder();
     int affectedRows = await queryBuilder
-                                .ExecuteAsync(conn, "UPDATE Users Set LastName=@PreferredName WHERE Id=@Id",
-                                new {Id = ,PreferredName="TestLastName"});
+                        .ExecuteAsync(conn, 
+                        "UPDATE Users Set LastName=@PreferredName WHERE Id=@Id",
+                        new {Id = 22 ,PreferredName="TestLastName"});
 ```
 
 [^ Back To Top][TableOfContents]
